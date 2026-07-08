@@ -9,10 +9,10 @@ public class TestRegisterUser {
 
         User user = new User();
 
-        user.setName("Nimal");
-        user.setEmail("nimal@gmail.com");
-        user.setPasswordHash("123456");
-        user.setLocation("Kandy");
+        user.setName("Kamal");
+        user.setEmail("kamal@gmail.com");
+        user.setPasswordHash("1234567");
+        user.setLocation("Colombo");
 
         user.setClientActive(true);
         user.setFreelancerActive(false);
