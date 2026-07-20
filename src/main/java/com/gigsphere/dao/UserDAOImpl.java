@@ -96,4 +96,41 @@ public class UserDAOImpl implements UserDAO {
 
         return null;
     }
+
+    @Override
+    public boolean updateRoleFlags(
+            int userId,
+            boolean clientActive,
+            boolean freelancerActive
+    ) {
+
+        String sql = """
+            UPDATE users
+            SET
+                client_active = ?,
+                freelancer_active = ?
+            WHERE id = ?
+            """;
+
+        try (
+                Connection connection =
+                        DBConnection.getConnection();
+
+                PreparedStatement statement =
+                        connection.prepareStatement(sql)
+        ) {
+
+            statement.setBoolean(1, clientActive);
+            statement.setBoolean(2, freelancerActive);
+            statement.setInt(3, userId);
+
+            return statement.executeUpdate() > 0;
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }

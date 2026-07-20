@@ -7,4 +7,12 @@ public interface UserDAO {
     boolean save(User user);
 
     User findByEmail(String email);
+
+
+    boolean updateRoleFlags(
+            int userId,
+            boolean clientActive,
+            boolean freelancerActive
+    );
+
 }
