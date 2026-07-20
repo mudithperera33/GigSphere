@@ -16,7 +16,8 @@ public class ProjectDAOImpl implements ProjectDAO {
     public boolean save(Project project) {
 
         String sql = """
-            INSERT INTO projects
+            
+                INSERT INTO projects
             (
                 title,
                 description,
@@ -193,15 +194,17 @@ public class ProjectDAOImpl implements ProjectDAO {
     @Override
     public boolean update(Project project) {
 
-        String sql = """
-            UPDATE projects
-            SET
-                title = ?,
-                description = ?,
-                budget = ?,
-                deadline = ?,
-                status = ?,
-                category_id = ?
+        String sql =
+                """
+            
+                UPDATE projects
+    
+                               title
+                         descri
+                              bud
+                            dea
+                              statu
+                          category_id = ?
             WHERE id = ?
             """;
 
@@ -253,4 +256,5 @@ public class ProjectDAOImpl implements ProjectDAO {
         }
 
         return false;
+    }
     }
