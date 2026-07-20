@@ -17,4 +17,9 @@ public interface ProjectDAO {
     boolean update(Project project);
 
     boolean delete(int projectId);
+
+    boolean updateStatus(
+            int projectId,
+            String status
+    );
 }

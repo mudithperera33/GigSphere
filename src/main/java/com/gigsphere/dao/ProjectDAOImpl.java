@@ -257,4 +257,37 @@ public class ProjectDAOImpl implements ProjectDAO {
 
         return false;
     }
+
+    @Override
+    public boolean updateStatus(
+            int projectId,
+            String status
+    ) {
+
+        String sql = """
+            UPDATE projects
+            SET status = ?
+            WHERE id = ?
+            """;
+
+        try (
+                Connection connection =
+                        DBConnection.getConnection();
+
+                PreparedStatement statement =
+                        connection.prepareStatement(sql)
+        ) {
+
+            statement.setString(1, status);
+            statement.setInt(2, projectId);
+
+            return statement.executeUpdate() > 0;
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return false;
+    }
     }
