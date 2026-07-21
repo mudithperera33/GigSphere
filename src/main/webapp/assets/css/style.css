@@ -1,0 +1,314 @@
+/* =========================================================
+   GigSphere — shared theme
+   Upwork + LinkedIn inspired: clean, professional, trustworthy
+   ========================================================= */
+
+:root {
+  --gs-primary: #0d6efd;
+  --gs-primary-dark: #0b5ed7;
+  --gs-success: #198754;
+  --gs-bg: #f8f9fa;
+  --gs-card-bg: #ffffff;
+  --gs-text-muted: #6c757d;
+  --gs-navbar-bg: #0d1b2a;
+  --gs-radius: 15px;
+  --gs-radius-sm: 10px;
+  --gs-shadow: 0 4px 20px rgba(13, 27, 42, 0.06);
+  --gs-shadow-hover: 0 10px 30px rgba(13, 27, 42, 0.12);
+}
+
+body {
+  background-color: var(--gs-bg);
+  font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: #212529;
+}
+
+.gs-main {
+  min-height: calc(100vh - 350px);
+}
+
+/* ---------- Navbar ---------- */
+.gs-navbar {
+  background-color: var(--gs-navbar-bg);
+}
+
+.gs-navbar .navbar-brand {
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.gs-navbar .nav-link {
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.gs-navbar .nav-link.active,
+.gs-navbar .nav-link:hover {
+  opacity: 1;
+  color: #fff;
+}
+
+.gs-btn-cta {
+  font-weight: 600;
+  border-radius: 50px;
+  padding: 0.4rem 1.1rem;
+}
+
+.gs-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--gs-primary);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* ---------- Cards ---------- */
+.card {
+  border: none;
+  border-radius: var(--gs-radius);
+  box-shadow: var(--gs-shadow);
+  background-color: var(--gs-card-bg);
+}
+
+.gs-card-hover {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.gs-card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--gs-shadow-hover);
+}
+
+/* ---------- Buttons ---------- */
+.btn-primary {
+  background-color: var(--gs-primary);
+  border-color: var(--gs-primary);
+  font-weight: 600;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--gs-primary-dark);
+  border-color: var(--gs-primary-dark);
+}
+
+.btn-success {
+  font-weight: 600;
+}
+
+.btn, .form-control, .form-select {
+  border-radius: var(--gs-radius-sm);
+}
+
+/* ---------- Forms ---------- */
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--gs-primary);
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+}
+
+.gs-auth-card {
+  border-radius: var(--gs-radius);
+}
+
+/* ---------- Alerts ---------- */
+.gs-alert {
+  border-radius: var(--gs-radius-sm);
+  border: none;
+}
+
+/* ---------- Badges / status pills ---------- */
+.gs-badge-role {
+  border-radius: 50px;
+  padding: 0.35em 0.9em;
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+/* ---------- Section headings ---------- */
+.gs-section-title {
+  font-weight: 700;
+}
+
+.gs-page-heading {
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.gs-page-subtext {
+  color: var(--gs-text-muted);
+}
+
+/* ---------- Sidebar (dashboards) ---------- */
+.gs-sidebar {
+  background-color: var(--gs-card-bg);
+  border-radius: var(--gs-radius);
+  box-shadow: var(--gs-shadow);
+  padding: 1.25rem;
+}
+
+.gs-sidebar .nav-link {
+  color: #495057;
+  border-radius: var(--gs-radius-sm);
+  padding: 0.6rem 0.9rem;
+  font-weight: 500;
+}
+
+.gs-sidebar .nav-link.active {
+  background-color: rgba(13, 110, 253, 0.1);
+  color: var(--gs-primary);
+}
+
+.gs-sidebar .nav-link:hover {
+  background-color: rgba(13, 110, 253, 0.06);
+}
+
+/* ---------- Stat cards ---------- */
+.gs-stat-card {
+  border-radius: var(--gs-radius);
+  box-shadow: var(--gs-shadow);
+  padding: 1.25rem;
+  background: var(--gs-card-bg);
+}
+
+.gs-stat-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.gs-stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: #fff;
+}
+
+/* ---------- Footer ---------- */
+.gs-footer {
+  background-color: var(--gs-navbar-bg);
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.gs-footer-brand {
+  color: #fff;
+  font-weight: 700;
+}
+
+.gs-footer-link {
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+}
+
+.gs-footer-link:hover {
+  color: #fff;
+}
+
+/* ---------- Hero (index page) ---------- */
+.gs-hero {
+  background: linear-gradient(135deg, var(--gs-navbar-bg) 0%, #10263c 100%);
+  color: #fff;
+  border-radius: var(--gs-radius);
+}
+
+/* ---------- Utility ---------- */
+.gs-shadow-sm {
+  box-shadow: var(--gs-shadow);
+}
+
+/* ==========================================
+   GigSphere Project Status Badges
+   ========================================== */
+
+.gs-status-open {
+  background-color: #198754;
+  color: white;
+}
+
+.gs-status-progress {
+  background-color: #0d6efd;
+  color: white;
+}
+
+.gs-status-completed {
+  background-color: #6c757d;
+  color: white;
+}
+
+.gs-status-revision {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+/* ==========================================
+   Proposal Status Badges
+   ========================================== */
+
+.gs-proposal-pending {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.gs-proposal-accepted {
+  background-color: #198754;
+  color: white;
+}
+
+.gs-proposal-rejected {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* ==========================================
+   Notification Badge
+   ========================================== */
+
+.gs-notification-badge {
+  min-width: 18px;
+  min-height: 18px;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ==========================================
+   Portfolio Cards
+   ========================================== */
+
+.gs-portfolio-card img {
+  height: 200px;
+  object-fit: cover;
+}
+
+/* ==========================================
+   Messaging
+   ========================================== */
+
+.gs-chat-box {
+  height: 450px;
+  overflow-y: auto;
+}
+
+.gs-message-self {
+  background-color: #d1e7dd;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.gs-message-other {
+  background-color: #f1f3f5;
+  border-radius: 15px;
+  padding: 10px;
+}
