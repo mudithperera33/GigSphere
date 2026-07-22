@@ -5,20 +5,20 @@ import com.gigsphere.service.AuthenticationService;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
 @WebServlet("/register")
-public class RegisterServlet
-        extends HttpServlet {
+public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(
             HttpServletRequest request,
             HttpServletResponse response
-    )
-            throws ServletException, IOException {
+    ) throws ServletException, IOException {
 
         String name =
                 request.getParameter("name");
@@ -29,19 +29,38 @@ public class RegisterServlet
         String password =
                 request.getParameter("password");
 
+        String location =
+                request.getParameter("location");
+
         User user = new User();
 
         user.setName(name);
         user.setEmail(email);
         user.setPasswordHash(password);
 
-        AuthenticationService service =
+        // Required fields
+        user.setLocation(
+                location != null
+                        ? location
+                        : "Not Specified"
+        );
+
+        user.setClientActive(false);
+        user.setFreelancerActive(false);
+
+        AuthenticationService authService =
                 new AuthenticationService();
 
-        boolean registered =
-                service.register(user);
+        boolean success =
+                authService.register(user);
 
-        if(registered) {
+        if (success) {
+
+            request.getSession()
+                    .setAttribute(
+                            "flashSuccess",
+                            "Registration successful. Please login."
+                    );
 
             response.sendRedirect(
                     request.getContextPath()

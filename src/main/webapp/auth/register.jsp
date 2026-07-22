@@ -14,66 +14,57 @@
 
                 <div class="card-body p-4">
 
-                    <h2 class="mb-4">
-                        Create Account
-                    </h2>
+                    <h3 class="mb-4">
+                        Create Your Account
+                    </h3>
 
                     <form action="<%= request.getContextPath() %>/register" method="post">
 
-                        <input
-                                type="text"
-                                name="name"
-                                class="form-control mb-3"
-                                placeholder="Full Name"
-                                required>
-
-                        <input
-                                type="email"
-                                name="email"
-                                class="form-control mb-3"
-                                placeholder="Email"
-                                required>
-
-                        <div class="input-group mb-3">
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Full Name
+                            </label>
                             <input
-                                    type="password"
-                                    name="password"
-                                    id="regPassword"
+                                    type="text"
+                                    name="name"
                                     class="form-control"
-                                    placeholder="Password"
                                     required>
-                            <span class="input-group-text" style="cursor:pointer;">
-                                <i class="bi bi-eye" data-toggle="password" data-target="#regPassword"></i>
-                            </span>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label small text-muted mb-2">I want to join as:</label>
-                            <div class="d-flex gap-3">
-                                <div class="form-check">
-                                    <input
-                                            class="form-check-input"
-                                            type="radio"
-                                            name="role"
-                                            id="roleClient"
-                                            value="CLIENT"
-                                            checked>
-                                    <label class="form-check-label" for="roleClient">
-                                        Client
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input
-                                            class="form-check-input"
-                                            type="radio"
-                                            name="role"
-                                            id="roleFreelancer"
-                                            value="FREELANCER">
-                                    <label class="form-check-label" for="roleFreelancer">
-                                        Freelancer
-                                    </label>
-                                </div>
-                            </div>
+                            <label class="form-label">
+                                Email
+                            </label>
+                            <input
+                                    type="email"
+                                    name="email"
+                                    class="form-control"
+                                    required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Password
+                            </label>
+                            <input
+                                    type="password"
+                                    name="password"
+                                    class="form-control"
+                                    required>
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Location
+                            </label>
+
+                            <input
+                                    type="text"
+                                    name="location"
+                                    class="form-control"
+                                    required>
+
                         </div>
 
                         <button
@@ -85,11 +76,6 @@
                         </button>
 
                     </form>
-
-                    <p class="text-center small text-muted mt-3 mb-0">
-                        Already have an account?
-                        <a href="<%= request.getContextPath() %>/auth/login.jsp">Log in</a>
-                    </p>
 
                 </div>
 

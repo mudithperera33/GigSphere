@@ -15,13 +15,22 @@ public class AuthenticationService {
 
     public boolean register(User user) {
 
+        System.out.println("================================");
+        System.out.println("REGISTER ATTEMPT");
+        System.out.println("Email: " + user.getEmail());
+
         User existingUser =
                 userDAO.findByEmail(user.getEmail());
+
+        System.out.println(
+                "Existing User: " + existingUser
+        );
 
         if(existingUser != null) {
 
             System.out.println(
-                    "Email already exists!");
+                    "EMAIL ALREADY EXISTS"
+            );
 
             return false;
         }
@@ -33,8 +42,16 @@ public class AuthenticationService {
         user.setPasswordHash(
                 hashedPassword);
 
-        return userDAO.save(user);
+        boolean result =
+                userDAO.save(user);
+
+        System.out.println(
+                "SAVE RESULT: " + result
+        );
+
+        return result;
     }
+
     public boolean login(
             String email,
             String password
