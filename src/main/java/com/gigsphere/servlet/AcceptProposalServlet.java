@@ -11,6 +11,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import com.gigsphere.model.Notification;
+import com.gigsphere.dao.NotificationDAO;
+import com.gigsphere.dao.NotificationDAOImpl;
+
 import java.io.IOException;
 
 @WebServlet("/accept-proposal")
@@ -40,6 +44,25 @@ public class AcceptProposalServlet extends HttpServlet {
                                 "flashSuccess",
                                 "Proposal Accepted"
                         );
+                        Notification notification =
+                                new Notification();
+
+                        notification.setUserId(
+                                proposal.getFreelancerId()
+                        );
+
+                        notification.setType(
+                                "PROPOSAL_ACCEPTED"
+                        );
+
+                        notification.setMessage(
+                                "Your proposal has been accepted."
+                        );
+
+                        NotificationDAO notificationDAO =
+                                new NotificationDAOImpl();
+
+                        notificationDAO.save(notification);
                     } else {
                         request.getSession().setAttribute(
                                 "flashError",

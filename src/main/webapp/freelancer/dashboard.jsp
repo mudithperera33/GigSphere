@@ -41,7 +41,7 @@ if (session.getAttribute("user") == null) {
                         <h5>My Proposals</h5>
                         <p class="text-muted small">View Bids</p>
                     </div>
-                    <a href="<%= request.getContextPath() %>/freelancer/proposals.jsp" class="btn btn-secondary w-100">
+                    <a href="<%= request.getContextPath() %>/freelancer/proposal.jsp" class="btn btn-secondary w-100">
                         <i class="bi bi-send me-1"></i> Open
                     </a>
                 </div>

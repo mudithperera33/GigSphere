@@ -1,4 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.gigsphere.dao.NotificationDAO" %>
+<%@ page import="com.gigsphere.dao.NotificationDAOImpl" %>
+<%@ page import="com.gigsphere.model.Notification" %>
+<%@ page import="java.util.List" %>
 
 <%
 String pageTitle =
@@ -21,6 +25,18 @@ String sessRole =
 
 boolean loggedIn =
         sessUser != null;
+
+int notificationCount = 0;
+
+if (session.getAttribute("userId") != null) {
+    Integer headerUserId = (Integer) session.getAttribute("userId");
+    NotificationDAO headerNotificationDAO = new NotificationDAOImpl();
+    List<Notification> headerNotifications = headerNotificationDAO.findByUserId(headerUserId);
+
+    if (headerNotifications != null) {
+        notificationCount = headerNotifications.size();
+    }
+}
 %>
 
 <!DOCTYPE html>
@@ -192,27 +208,41 @@ boolean loggedIn =
                 <% } else { %>
 
                 <li class="nav-item me-3">
-                    <a class="nav-link position-relative" href="#">
+
+                    <a class="nav-link position-relative" href="<%= ctx %>/notifications.jsp">
+
                         <i class="bi bi-bell fs-5"></i>
+
+                        <% if (notificationCount > 0) { %>
+
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                <%= notificationCount %>
+                                <span class="visually-hidden">unread notifications</span>
+                            </span>
+
+                        <% } %>
+
                     </a>
+
                 </li>
 
                 <li class="nav-item dropdown">
 
-                    <a class="nav-link dropdown-toggle d-flex align-items-center gap-2"
-                       href="#"
-                       role="button"
-                       data-bs-toggle="dropdown">
+                   <a class="nav-link dropdown-toggle d-flex align-items-center gap-2"
+                      href="#"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false">
 
-                        <span class="badge rounded-circle bg-primary p-2">
-                            <%= sessUser.substring(0, 1).toUpperCase() %>
-                        </span>
+                       <span class="badge rounded-circle bg-primary p-2">
+                           <%= sessUser.substring(0, 1).toUpperCase() %>
+                       </span>
 
-                        <span>
-                            <%= sessUser %>
-                        </span>
+                       <span>
+                           <%= sessUser %>
+                       </span>
 
-                    </a>
+                   </a>
 
                     <ul class="dropdown-menu dropdown-menu-end">
 

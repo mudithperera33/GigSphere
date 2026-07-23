@@ -8,6 +8,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
+import com.gigsphere.model.Notification;
+import com.gigsphere.dao.NotificationDAO;
+import com.gigsphere.dao.NotificationDAOImpl;
+
 import java.io.IOException;
 
 @WebServlet("/submit-review")
@@ -44,6 +48,23 @@ public class SubmitReviewServlet extends HttpServlet {
             dao.save(review);
 
             request.getSession().setAttribute("flashSuccess", "Review submitted successfully!");
+            Notification notification =
+                    new Notification();
+
+            notification.setUserId(
+                    revieweeId
+            );
+
+            notification.setType(
+                    "NEW_REVIEW"
+            );
+
+            notification.setMessage(
+                    "You received a new review."
+            );
+
+            new NotificationDAOImpl()
+                    .save(notification);
 
         } catch (NumberFormatException e) {
             request.getSession().setAttribute("flashError", "Invalid review parameters provided.");
