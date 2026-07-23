@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
 
@@ -132,5 +134,64 @@ public class UserDAOImpl implements UserDAO {
         }
 
         return false;
+    }
+    @Override
+    public List<User> findAll() {
+
+        List<User> users =
+                new ArrayList<>();
+
+        String sql =
+                "SELECT * FROM users";
+
+        try (
+                Connection connection =
+                        DBConnection.getConnection();
+
+                PreparedStatement statement =
+                        connection.prepareStatement(sql);
+
+                ResultSet rs =
+                        statement.executeQuery()
+        ) {
+
+            while (rs.next()) {
+
+                User user =
+                        new User();
+
+                user.setId(
+                        rs.getInt("id")
+                );
+
+                user.setName(
+                        rs.getString("name")
+                );
+
+                user.setEmail(
+                        rs.getString("email")
+                );
+
+                user.setLocation(
+                        rs.getString("location")
+                );
+
+                user.setClientActive(
+                        rs.getBoolean("client_active")
+                );
+
+                user.setFreelancerActive(
+                        rs.getBoolean("freelancer_active")
+                );
+
+                users.add(user);
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return users;
     }
 }

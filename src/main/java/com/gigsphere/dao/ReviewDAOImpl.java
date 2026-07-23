@@ -152,4 +152,63 @@ public class ReviewDAOImpl implements ReviewDAO {
 
         return 0;
     }
+    @Override
+    public List<Review> findAll() {
+
+        List<Review> reviews =
+                new ArrayList<>();
+
+        String sql =
+                "SELECT * FROM reviews";
+
+        try (
+                Connection connection =
+                        DBConnection.getConnection();
+
+                PreparedStatement statement =
+                        connection.prepareStatement(sql);
+
+                ResultSet rs =
+                        statement.executeQuery()
+        ) {
+
+            while (rs.next()) {
+
+                Review review =
+                        new Review();
+
+                review.setId(
+                        rs.getInt("id")
+                );
+
+                review.setProjectId(
+                        rs.getInt("project_id")
+                );
+
+                review.setReviewerId(
+                        rs.getInt("reviewer_id")
+                );
+
+                review.setRevieweeId(
+                        rs.getInt("reviewee_id")
+                );
+
+                review.setRating(
+                        rs.getInt("rating")
+                );
+
+                review.setComment(
+                        rs.getString("comment")
+                );
+
+                reviews.add(review);
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return reviews;
+    }
 }

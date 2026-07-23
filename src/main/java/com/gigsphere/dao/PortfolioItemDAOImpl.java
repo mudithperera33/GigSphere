@@ -140,4 +140,29 @@ public class PortfolioItemDAOImpl
 
         return items;
     }
+    @Override
+    public boolean delete(int id) {
+
+        String sql =
+                "DELETE FROM portfolio_items WHERE id = ?";
+
+        try (
+                Connection connection =
+                        DBConnection.getConnection();
+
+                PreparedStatement statement =
+                        connection.prepareStatement(sql)
+        ) {
+
+            statement.setInt(1, id);
+
+            return statement.executeUpdate() > 0;
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }

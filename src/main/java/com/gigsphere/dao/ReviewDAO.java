@@ -10,5 +10,7 @@ public interface ReviewDAO {
 
     List<Review> findByUserId(int userId);
 
+    List<Review> findAll();
+
     double getAverageRating(int userId);
 }

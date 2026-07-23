@@ -7,6 +7,7 @@ import java.util.List;
 public interface PortfolioItemDAO {
 
     boolean save(PortfolioItem item);
+    boolean delete(int id);
 
     List<PortfolioItem> findByFreelancerId(
             int freelancerId);

@@ -97,6 +97,7 @@ if (session.getAttribute("userId") != null) {
                     </a>
                 </li>
 
+
                 <% } else if ("CLIENT".equalsIgnoreCase(sessRole)) { %>
 
                 <li class="nav-item">
@@ -105,6 +106,16 @@ if (session.getAttribute("userId") != null) {
                         Dashboard
                     </a>
                 </li>
+
+                <form action="<%= ctx %>/search" method="get" class="d-flex me-3" role="search">
+
+                    <input type="search"
+                           name="keyword"
+                           class="form-control form-control-sm"
+                           placeholder="Search projects"
+                           aria-label="Search projects">
+
+                </form>
 
                 <li class="nav-item">
                     <a class="nav-link <%= "projects".equals(activePage) ? "active" : "" %>"
@@ -142,6 +153,15 @@ if (session.getAttribute("userId") != null) {
                         Dashboard
                     </a>
                 </li>
+                <form action="<%= ctx %>/search" method="get" class="d-flex me-3" role="search">
+
+                                    <input type="search"
+                                           name="keyword"
+                                           class="form-control form-control-sm"
+                                           placeholder="Search projects"
+                                           aria-label="Search projects">
+
+                                </form>
 
                 <li class="nav-item">
                     <a class="nav-link <%= "projects".equals(activePage) ? "active" : "" %>"
@@ -182,6 +202,60 @@ if (session.getAttribute("userId") != null) {
                     <a class="nav-link <%= "messages".equals(activePage) ? "active" : "" %>"
                        href="<%= ctx %>/messages.jsp">
                         Messages
+                    </a>
+                </li>
+
+                <% } %>
+
+            </ul>
+            <ul class="navbar-nav me-auto">
+
+                <% if (!loggedIn) { %>
+
+                <li class="nav-item">
+                    <a class="nav-link <%= "home".equals(activePage) ? "active" : "" %>"
+                       href="<%= ctx %>/index.jsp">
+                        Home
+                    </a>
+                </li>
+
+                <% } else if ("CLIENT".equalsIgnoreCase(sessRole)) { %>
+
+                    <!-- Client navigation items -->
+                    ...
+
+                <% } else if ("FREELANCER".equalsIgnoreCase(sessRole)) { %>
+
+                    <!-- Freelancer navigation items -->
+                    ...
+
+                <% } else if ("ADMIN".equalsIgnoreCase(sessRole)) { %>
+
+                <li class="nav-item">
+                    <a class="nav-link <%= "admin".equals(activePage) ? "active" : "" %>"
+                       href="<%= ctx %>/admin/dashboard.jsp">
+                        Dashboard
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="<%= ctx %>/admin/users.jsp">
+                        Users
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="<%= ctx %>/admin/projects.jsp">
+                        Projects
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="<%= ctx %>/admin/reviews.jsp">
+                        Reviews
                     </a>
                 </li>
 
