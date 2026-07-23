@@ -20,80 +20,47 @@ public class LoginServlet extends HttpServlet {
             HttpServletResponse response
     ) throws ServletException, IOException {
 
-        String email =
-                request.getParameter("email");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
 
-        String password =
-                request.getParameter("password");
+        AuthenticationService authService = new AuthenticationService();
 
-        AuthenticationService authService =
-                new AuthenticationService();
+        boolean success = authService.login(email, password);
 
-        boolean success =
-                authService.login(
-                        email,
-                        password
-                );
+        if (success) {
 
-        if(success) {
+            UserDAO userDAO = new UserDAOImpl();
+            User user = userDAO.findByEmail(email);
 
-            UserDAO userDAO =
-                    new UserDAOImpl();
+            HttpSession session = request.getSession();
 
-            User user =
-                    userDAO.findByEmail(email);
+            // Set user profile info in session
+            session.setAttribute("user", user.getName());
+            session.setAttribute("email", user.getEmail());
+            session.setAttribute("userId", user.getId());
 
-            HttpSession session =
-                    request.getSession();
-
-            session.setAttribute(
-                    "user",
-                    user.getName()
-            );
-
-            if(user.isClientActive()) {
-
-                session.setAttribute(
-                        "role",
-                        "CLIENT"
-                );
-
-            } else if(user.isFreelancerActive()) {
-
-                session.setAttribute(
-                        "role",
-                        "FREELANCER"
-                );
-
+            // Set initial active role
+            if (user.isClientActive()) {
+                session.setAttribute("role", "CLIENT");
+            } else if (user.isFreelancerActive()) {
+                session.setAttribute("role", "FREELANCER");
             } else {
-
-                session.setAttribute(
-                        "role",
-                        "USER"
-                );
+                session.setAttribute("role", "USER");
             }
 
-            session.setAttribute(
-                    "userId",
-                    user.getId()
-            );
-
             response.sendRedirect(
-                    request.getContextPath()
-                            + "/dashboard.jsp"
+                    request.getContextPath() + "/dashboard.jsp"
             );
 
         } else {
 
-            request.getSession()
-                    .setAttribute(
-                            "flashError",
-                            "Invalid email or password."
-                    );
+            request.getSession().setAttribute(
+                    "flashError",
+                    "Invalid email or password."
+            );
 
             response.sendRedirect(
-                    request.getContextPath()
-                            + "/auth/login.jsp"
+                    request.getContextPath() + "/auth/login.jsp"
             );
         }
     }

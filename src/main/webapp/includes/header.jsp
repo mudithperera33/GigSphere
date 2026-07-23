@@ -224,6 +224,23 @@
                                 </a>
                             </li>
                             <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item" href="<%= ctx %>/activate-client">
+                                    <i class="bi bi-briefcase me-2"></i>
+                                    Activate Client Profile
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item" href="<%= ctx %>/activate-freelancer">
+                                    <i class="bi bi-person-workspace me-2"></i>
+                                    Activate Freelancer Profile
+                                </a>
+                            </li>
+                            <li>
                                 <a class="dropdown-item text-danger" href="<%= ctx %>/logout">
                                     <i class="bi bi-box-arrow-right me-2"></i>Logout
                                 </a>

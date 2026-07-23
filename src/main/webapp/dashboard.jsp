@@ -27,7 +27,7 @@
             <div class="gs-stat-card">
                 <h6>Active Role</h6>
                 <div class="gs-stat-value">
-                    ${sessionScope.role}
+                    <%= session.getAttribute("role") != null ? session.getAttribute("role") : "GUEST" %>
                 </div>
             </div>
         </div>
