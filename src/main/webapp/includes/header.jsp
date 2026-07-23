@@ -136,7 +136,7 @@ boolean loggedIn =
 
                 <li class="nav-item">
                     <a class="nav-link <%= "proposals".equals(activePage) ? "active" : "" %>"
-                       href="<%= ctx %>/freelancer/my-proposals.jsp">
+                       href="<%= ctx %>/freelancer/proposal.jsp">
                         My Proposals
                     </a>
                 </li>

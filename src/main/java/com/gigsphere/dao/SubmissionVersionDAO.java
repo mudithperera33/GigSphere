@@ -12,6 +12,10 @@ public interface SubmissionVersionDAO {
             int submissionId
     );
 
+    SubmissionVersion findLatestBySubmissionId(
+            int submissionId
+    );
+
     boolean updateStatus(
             int versionId,
             String status,

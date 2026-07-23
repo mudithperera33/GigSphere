@@ -7,8 +7,9 @@
 
 <%
 request.setAttribute("pageTitle", "Browse Projects");
+request.setAttribute("activePage", "browse");
 
-if(session.getAttribute("user") == null){
+if (session.getAttribute("user") == null) {
     response.sendRedirect(
             request.getContextPath()
                     + "/auth/login.jsp");
@@ -31,63 +32,62 @@ List<Project> projects = projectDAO.findAll();
 
         <% if (projects == null || projects.isEmpty()) { %>
             <div class="col-12">
-                <div class="alert alert-info">
+                <div class="alert alert-info shadow-sm">
                     No available projects found at the moment.
                 </div>
             </div>
         <% } else { %>
-            <% for(Project project : projects){ %>
+            <% for (Project project : projects) { %>
 
                 <%
-                if("COMPLETED".equalsIgnoreCase(
-                        project.getStatus()
-                )) {
+                if ("COMPLETED".equalsIgnoreCase(project.getStatus())) {
                     continue;
                 }
                 %>
 
             <div class="col-md-6 mb-4">
 
-                <div class="card gs-card-hover">
+                <div class="card gs-card-hover h-100 shadow-sm">
 
-                    <div class="card-body">
+                    <div class="card-body d-flex flex-column justify-content-between">
 
-                        <h5>
-                            <%= project.getTitle() %>
-                        </h5>
+                        <div>
+                            <h5 class="card-title">
+                                <%= project.getTitle() %>
+                            </h5>
 
-                        <p>
-                            <%= project.getDescription() %>
-                        </p>
+                            <p class="card-text text-muted">
+                                <%= project.getDescription() %>
+                            </p>
 
-                        <p>
-                            <strong>Budget:</strong>
-                            LKR <%= String.format("%,.2f", project.getBudget()) %>
-                        </p>
+                            <p class="mb-1">
+                                <strong>Budget:</strong>
+                                LKR <%= String.format("%,.2f", project.getBudget()) %>
+                            </p>
 
-                        <p>
-                            <strong>Status:</strong>
-                            <span class="badge bg-success"><%= project.getStatus() %></span>
-                        </p>
+                            <p class="mb-3">
+                                <strong>Status:</strong>
+                                <span class="badge bg-success"><%= project.getStatus() %></span>
+                            </p>
+                        </div>
 
-                        <% if ("OPEN".equalsIgnoreCase(project.getStatus())) { %>
+                        <div>
+                            <% if ("OPEN".equalsIgnoreCase(project.getStatus())) { %>
 
-                            () %>/freelancer/proposal.jsp?projectId=<%= project.getId() %>"
-                               class="btn btn-primary">
+                                <a href="<%= ctx %>/freelancer/proposal.jsp?projectId=<%= project.getId() %>"
+                                   class="btn btn-primary w-100">
+                                    <i class="bi bi-file-earmark-text me-1"></i>
+                                    Submit Proposal
+                                </a>
 
-                                Submit Proposal
+                            <% } else { %>
 
-                            </a>
+                                <span class="badge bg-secondary p-2">
+                                    <%= project.getStatus() %>
+                                </span>
 
-                        <% } else { %>
-
-                            <span class="badge bg-secondary">
-
-                                <%= project.getStatus() %>
-
-                            </span>
-
-                        <% } %>
+                            <% } %>
+                        </div>
 
                     </div>
 

@@ -1,21 +1,29 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <%@ page import="java.util.List" %>
+
 <%@ page import="com.gigsphere.dao.ProjectDAO" %>
 <%@ page import="com.gigsphere.dao.ProjectDAOImpl" %>
+
 <%@ page import="com.gigsphere.dao.SubmissionDAO" %>
 <%@ page import="com.gigsphere.dao.SubmissionDAOImpl" %>
+
+<%@ page import="com.gigsphere.dao.SubmissionVersionDAO" %>
+<%@ page import="com.gigsphere.dao.SubmissionVersionDAOImpl" %>
+
 <%@ page import="com.gigsphere.model.Project" %>
 <%@ page import="com.gigsphere.model.Submission" %>
+<%@ page import="com.gigsphere.model.SubmissionVersion" %>
 
 <%
-request.setAttribute(
-        "pageTitle",
-        "Submitted Work"
-);
+request.setAttribute("pageTitle", "Submitted Work");
+request.setAttribute("activePage", "submissions");
 
 if (session.getAttribute("user") == null) {
     response.sendRedirect(
             request.getContextPath()
-                    + "/auth/login.jsp");
+                    + "/auth/login.jsp"
+    );
     return;
 }
 
@@ -23,6 +31,7 @@ Integer userId = (Integer) session.getAttribute("userId");
 
 ProjectDAO projectDAO = new ProjectDAOImpl();
 SubmissionDAO submissionDAO = new SubmissionDAOImpl();
+SubmissionVersionDAO versionDAO = new SubmissionVersionDAOImpl();
 
 List<Project> projects = projectDAO.findByClientId(userId);
 %>
@@ -39,62 +48,98 @@ List<Project> projects = projectDAO.findByClientId(userId);
     boolean hasSubmissions = false;
 
     if (projects != null && !projects.isEmpty()) {
-        for(Project project : projects){
 
-            Submission submission = submissionDAO.findByProjectId(project.getId());
+        for (Project project : projects) {
 
-            if(submission == null) {
+            Submission submission =
+                    submissionDAO.findByProjectId(
+                            project.getId()
+                    );
+
+            if (submission == null) {
                 continue;
             }
+
+            SubmissionVersion version =
+                    versionDAO.findLatestBySubmissionId(
+                            submission.getId()
+                    );
+
+            if (version == null) {
+                continue;
+            }
+
             hasSubmissions = true;
     %>
 
-    <div class="card mb-3 gs-card-hover">
+    <div class="card mb-4 shadow-sm">
 
         <div class="card-body">
 
-            <div class="d-flex justify-content-between align-items-start mb-2">
-                <h5 class="card-title mb-0">
+            <div class="d-flex justify-content-between align-items-center">
+
+                <h5 class="mb-0">
                     <%= project.getTitle() %>
                 </h5>
-                <span class="badge bg-info text-dark">
-                    Version <%= submission.getCurrentVersion() %>
+
+                <span class="badge bg-primary">
+                    <%= project.getStatus() %>
                 </span>
+
             </div>
 
-            <p class="card-text text-secondary mb-3">
-                Submission received and ready for client approval.
+            <hr>
+
+            <p class="mb-1">
+                <strong>Version:</strong>
+                <%= version.getVersionNumber() %>
             </p>
 
-           <% if ("COMPLETED".equalsIgnoreCase(project.getStatus())) { %>
+            <p class="mb-1">
+                <strong>File Name:</strong>
+                <%= version.getFileName() %>
+            </p>
 
-               <div class="d-flex gap-2">
+            <p class="mb-1">
+                <strong>File Type:</strong>
+                <%= version.getFileType() %>
+            </p>
 
-                   <span class="badge bg-success">
+            <p class="mb-1">
+                <strong>Status:</strong>
+                <%= version.getStatus() %>
+            </p>
 
-                       Project Completed
+            <p class="mb-3">
+                <strong>Uploaded:</strong>
+                <%= version.getUploadedAt() %>
+            </p>
 
-                   </span>
+            <div class="mt-3 d-flex align-items-center gap-2">
 
-                   <a href="<%= p?projectId=<%= project.getId() %>&revieweeId=<%= submission.getFreelancerId() %>"
-                      class="btn btn-warning btn-sm">
+            <% if ("COMPLETED".equalsIgnoreCase(project.getStatus())) { %>
 
-                       Leave Review
+                <span class="badge bg-success py-2 px-3 me-2">
+                    Project Completed
+                </span>
 
-                   </a>
+                <a href="<%= ctx %>/client/review.jsp?projectId=<%= project.getId() %>&revieweeId=<%= submission.getFreelancerId() %>"
+                   class="btn btn-warning btn-sm">
+                    <i class="bi bi-star-fill me-1"></i>
+                    Leave Review
+                </a>
 
-               </div>
+            <% } else { %>
 
-           <% } else { %>
+                <a href="<%= ctx %>/complete-project?projectId=<%= project.getId() %>"
+                   class="btn btn-success">
+                    <i class="bi bi-check-circle-fill me-1"></i>
+                    Approve Work
+                </a>
 
-               <a href="<%= request.getContextPath()  %>/complete-project?projectId=<%= project.getId() %>"
+            <% } %>
 
-                  class="btn btn-success">
-                   <i class="bi bi-check-circle-fill me-1"></i>
-                   Approve Work
-               </a>
-
-           <% } %>
+            </div>
 
         </div>
 
@@ -107,9 +152,9 @@ List<Project> projects = projectDAO.findByClientId(userId);
     if (!hasSubmissions) {
     %>
 
-        <div class="alert alert-info">
-            <i class="bi bi-info-circle me-1"></i> No submitted work pending review for your projects.
-        </div>
+    <div class="alert alert-info shadow-sm">
+        No submitted work pending review.
+    </div>
 
     <% } %>
 

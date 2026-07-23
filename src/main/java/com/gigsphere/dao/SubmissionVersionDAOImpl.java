@@ -180,4 +180,84 @@ public class SubmissionVersionDAOImpl
 
         return false;
     }
+    @Override
+    public SubmissionVersion findLatestBySubmissionId(
+            int submissionId
+    ) {
+
+        String sql = """
+            SELECT *
+            FROM submission_versions
+            WHERE submission_id = ?
+            ORDER BY version_number DESC
+            LIMIT 1
+            """;
+
+        try (
+                Connection connection =
+                        DBConnection.getConnection();
+
+                PreparedStatement statement =
+                        connection.prepareStatement(sql)
+        ) {
+
+            statement.setInt(
+                    1,
+                    submissionId
+            );
+
+            ResultSet rs =
+                    statement.executeQuery();
+
+            if (rs.next()) {
+
+                SubmissionVersion version =
+                        new SubmissionVersion();
+
+                version.setId(
+                        rs.getInt("id")
+                );
+
+                version.setSubmissionId(
+                        rs.getInt("submission_id")
+                );
+
+                version.setVersionNumber(
+                        rs.getInt("version_number")
+                );
+
+                version.setFileName(
+                        rs.getString("file_name")
+                );
+
+                version.setFileType(
+                        rs.getString("file_type")
+                );
+
+                version.setFileSizeBytes(
+                        rs.getLong("file_size_bytes")
+                );
+
+                version.setStatus(
+                        rs.getString("status")
+                );
+
+                version.setClientNote(
+                        rs.getString("client_note")
+                );
+
+                version.setUploadedAt(
+                        rs.getTimestamp("uploaded_at")
+                );
+
+                return version;
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }
