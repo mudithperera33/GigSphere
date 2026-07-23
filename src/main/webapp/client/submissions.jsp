@@ -123,7 +123,7 @@ List<Project> projects = projectDAO.findByClientId(userId);
                     Project Completed
                 </span>
 
-                <a href="<%= ctx %>/client/review.jsp?projectId=<%= project.getId() %>&revieweeId=<%= submission.getFreelancerId() %>"
+                <a href="<%= ctx %>/review.jsp?projectId=<%= project.getId() %>&revieweeId=<%= submission.getFreelancerId() %>"
                    class="btn btn-warning btn-sm">
                     <i class="bi bi-star-fill me-1"></i>
                     Leave Review
