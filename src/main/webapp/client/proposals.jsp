@@ -53,6 +53,10 @@ List<Project> projects = projectDAO.findByClientId(userId);
                     <%= project.getTitle() %>
                 </strong>
 
+                <span class="badge bg-info">
+                    <%= project.getStatus() %>
+                </span>
+
                 <span class="badge bg-secondary">
                     <%= project.getStatus() %>
                 </span>

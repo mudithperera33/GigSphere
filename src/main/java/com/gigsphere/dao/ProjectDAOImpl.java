@@ -6,7 +6,6 @@ import com.gigsphere.util.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +15,7 @@ public class ProjectDAOImpl implements ProjectDAO {
     public boolean save(Project project) {
 
         String sql = """
-            
-                INSERT INTO projects
-            (
+            INSERT INTO projects (
                 title,
                 description,
                 budget,
@@ -26,16 +23,12 @@ public class ProjectDAOImpl implements ProjectDAO {
                 status,
                 client_id,
                 category_id
-            )
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?)
             """;
 
         try (
-                Connection connection =
-                        DBConnection.getConnection();
-
-                PreparedStatement statement =
-                        connection.prepareStatement(sql)
+                Connection connection = DBConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)
         ) {
 
             statement.setString(1, project.getTitle());
@@ -58,37 +51,29 @@ public class ProjectDAOImpl implements ProjectDAO {
     @Override
     public Project findById(int id) {
 
-        String sql =
-                "SELECT * FROM projects WHERE id = ?";
+        String sql = "SELECT * FROM projects WHERE id = ?";
 
         try (
-                Connection connection =
-                        DBConnection.getConnection();
-
-                PreparedStatement statement =
-                        connection.prepareStatement(sql)
+                Connection connection = DBConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)
         ) {
 
             statement.setInt(1, id);
 
-            ResultSet rs =
-                    statement.executeQuery();
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    Project project = new Project();
+                    project.setId(rs.getInt("id"));
+                    project.setTitle(rs.getString("title"));
+                    project.setDescription(rs.getString("description"));
+                    project.setBudget(rs.getDouble("budget"));
+                    project.setDeadline(rs.getDate("deadline"));
+                    project.setStatus(rs.getString("status"));
+                    project.setClientId(rs.getInt("client_id"));
+                    project.setCategoryId(rs.getInt("category_id"));
 
-            if(rs.next()) {
-
-                Project project =
-                        new Project();
-
-                project.setId(rs.getInt("id"));
-                project.setTitle(rs.getString("title"));
-                project.setDescription(rs.getString("description"));
-                project.setBudget(rs.getDouble("budget"));
-                project.setDeadline(rs.getDate("deadline"));
-                project.setStatus(rs.getString("status"));
-                project.setClientId(rs.getInt("client_id"));
-                project.setCategoryId(rs.getInt("category_id"));
-
-                return project;
+                    return project;
+                }
             }
 
         } catch (Exception e) {
@@ -98,32 +83,20 @@ public class ProjectDAOImpl implements ProjectDAO {
         return null;
     }
 
-
     @Override
     public List<Project> findAll() {
 
-        List<Project> projects =
-                new ArrayList<>();
-
-        String sql =
-                "SELECT * FROM projects";
+        List<Project> projects = new ArrayList<>();
+        String sql = "SELECT * FROM projects";
 
         try (
-                Connection connection =
-                        DBConnection.getConnection();
-
-                PreparedStatement statement =
-                        connection.prepareStatement(sql);
-
-                ResultSet rs =
-                        statement.executeQuery()
+                Connection connection = DBConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet rs = statement.executeQuery()
         ) {
 
-            while(rs.next()) {
-
-                Project project =
-                        new Project();
-
+            while (rs.next()) {
+                Project project = new Project();
                 project.setId(rs.getInt("id"));
                 project.setTitle(rs.getString("title"));
                 project.setDescription(rs.getString("description"));
@@ -144,44 +117,32 @@ public class ProjectDAOImpl implements ProjectDAO {
     }
 
     @Override
-    public List<Project> findByClientId(
-            int clientId
-    ) {
+    public List<Project> findByClientId(int clientId) {
 
-        List<Project> projects =
-                new ArrayList<>();
-
-        String sql =
-                "SELECT * FROM projects WHERE client_id = ?";
+        List<Project> projects = new ArrayList<>();
+        String sql = "SELECT * FROM projects WHERE client_id = ?";
 
         try (
-                Connection connection =
-                        DBConnection.getConnection();
-
-                PreparedStatement statement =
-                        connection.prepareStatement(sql)
+                Connection connection = DBConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)
         ) {
 
             statement.setInt(1, clientId);
 
-            ResultSet rs =
-                    statement.executeQuery();
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    Project project = new Project();
+                    project.setId(rs.getInt("id"));
+                    project.setTitle(rs.getString("title"));
+                    project.setDescription(rs.getString("description"));
+                    project.setBudget(rs.getDouble("budget"));
+                    project.setDeadline(rs.getDate("deadline"));
+                    project.setStatus(rs.getString("status"));
+                    project.setClientId(rs.getInt("client_id"));
+                    project.setCategoryId(rs.getInt("category_id"));
 
-            while(rs.next()) {
-
-                Project project =
-                        new Project();
-
-                project.setId(rs.getInt("id"));
-                project.setTitle(rs.getString("title"));
-                project.setDescription(rs.getString("description"));
-                project.setBudget(rs.getDouble("budget"));
-                project.setDeadline(rs.getDate("deadline"));
-                project.setStatus(rs.getString("status"));
-                project.setClientId(rs.getInt("client_id"));
-                project.setCategoryId(rs.getInt("category_id"));
-
-                projects.add(project);
+                    projects.add(project);
+                }
             }
 
         } catch (Exception e) {
@@ -194,19 +155,17 @@ public class ProjectDAOImpl implements ProjectDAO {
     @Override
     public boolean update(Project project) {
 
-        String sql =
-                """
-            
-                UPDATE projects
-    
-                               title
-                         descri
-                              bud
-                            dea
-                              statu
-                          category_id = ?
-            WHERE id = ?
-            """;
+        String sql = """
+        UPDATE projects
+        SET
+            title = ?,
+            description = ?,
+            budget = ?,
+            deadline = ?,
+            status = ?,
+            category_id = ?
+        WHERE id = ?
+        """;
 
         try (
                 Connection connection =
@@ -227,6 +186,7 @@ public class ProjectDAOImpl implements ProjectDAO {
             return statement.executeUpdate() > 0;
 
         } catch (Exception e) {
+
             e.printStackTrace();
         }
 
@@ -236,15 +196,11 @@ public class ProjectDAOImpl implements ProjectDAO {
     @Override
     public boolean delete(int projectId) {
 
-        String sql =
-                "DELETE FROM projects WHERE id = ?";
+        String sql = "DELETE FROM projects WHERE id = ?";
 
         try (
-                Connection connection =
-                        DBConnection.getConnection();
-
-                PreparedStatement statement =
-                        connection.prepareStatement(sql)
+                Connection connection = DBConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)
         ) {
 
             statement.setInt(1, projectId);
@@ -259,10 +215,7 @@ public class ProjectDAOImpl implements ProjectDAO {
     }
 
     @Override
-    public boolean updateStatus(
-            int projectId,
-            String status
-    ) {
+    public boolean updateStatus(int projectId, String status) {
 
         String sql = """
             UPDATE projects
@@ -271,11 +224,8 @@ public class ProjectDAOImpl implements ProjectDAO {
             """;
 
         try (
-                Connection connection =
-                        DBConnection.getConnection();
-
-                PreparedStatement statement =
-                        connection.prepareStatement(sql)
+                Connection connection = DBConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)
         ) {
 
             statement.setString(1, status);
@@ -284,10 +234,9 @@ public class ProjectDAOImpl implements ProjectDAO {
             return statement.executeUpdate() > 0;
 
         } catch (Exception e) {
-
             e.printStackTrace();
         }
 
         return false;
     }
-    }
+}

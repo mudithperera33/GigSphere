@@ -38,6 +38,14 @@ List<Project> projects = projectDAO.findAll();
         <% } else { %>
             <% for(Project project : projects){ %>
 
+                <%
+                if("COMPLETED".equalsIgnoreCase(
+                        project.getStatus()
+                )) {
+                    continue;
+                }
+                %>
+
             <div class="col-md-6 mb-4">
 
                 <div class="card gs-card-hover">
@@ -62,10 +70,24 @@ List<Project> projects = projectDAO.findAll();
                             <span class="badge bg-success"><%= project.getStatus() %></span>
                         </p>
 
-                        <a href="<%= request.getContextPath() %>/freelancer/proposal.jsp?projectId=<%= project.getId() %>"
-                           class="btn btn-primary">
-                            Submit Proposal
-                        </a>
+                        <% if ("OPEN".equalsIgnoreCase(project.getStatus())) { %>
+
+                            () %>/freelancer/proposal.jsp?projectId=<%= project.getId() %>"
+                               class="btn btn-primary">
+
+                                Submit Proposal
+
+                            </a>
+
+                        <% } else { %>
+
+                            <span class="badge bg-secondary">
+
+                                <%= project.getStatus() %>
+
+                            </span>
+
+                        <% } %>
 
                     </div>
 

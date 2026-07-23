@@ -87,6 +87,15 @@ List<Project> projects = dao.findByClientId(userId);
                         <td>
                             LKR <%= String.format("%,.2f", project.getBudget()) %>
                         </td>
+                        <td>
+
+                            <span class="badge bg-secondary">
+
+                                <%= project.getStatus() %>
+
+                            </span>
+
+                        </td>
 
                         <td>
                             <%= project.getDeadline() %>
