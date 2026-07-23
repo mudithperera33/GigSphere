@@ -7,6 +7,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class ProjectAssignmentDAOImpl
         implements ProjectAssignmentDAO {
 
@@ -103,5 +107,133 @@ public class ProjectAssignmentDAOImpl
         }
 
         return null;
+    }
+    @Override
+    public List<ProjectAssignment> findByFreelancerId(
+            int freelancerId
+    ) {
+
+        List<ProjectAssignment> assignments =
+                new ArrayList<>();
+
+        String sql = """
+            SELECT *
+            FROM project_assignments
+            WHERE freelancer_id = ?
+            """;
+
+        try (
+                Connection connection =
+                        DBConnection.getConnection();
+
+                PreparedStatement statement =
+                        connection.prepareStatement(sql)
+        ) {
+
+            statement.setInt(
+                    1,
+                    freelancerId
+            );
+
+            ResultSet rs =
+                    statement.executeQuery();
+
+            while(rs.next()) {
+
+                ProjectAssignment assignment =
+                        new ProjectAssignment();
+
+                assignment.setId(
+                        rs.getInt("id")
+                );
+
+                assignment.setProjectId(
+                        rs.getInt("project_id")
+                );
+
+                assignment.setFreelancerId(
+                        rs.getInt("freelancer_id")
+                );
+
+                assignment.setProposalId(
+                        rs.getInt("proposal_id")
+                );
+
+                assignments.add(
+                        assignment
+                );
+            }
+
+        } catch(Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return assignments;
+    }
+    @Override
+    public List<ProjectAssignment> findByClientId(
+            int clientId
+    ) {
+
+        List<ProjectAssignment> assignments =
+                new ArrayList<>();
+
+        String sql = """
+            SELECT pa.*
+            FROM project_assignments pa
+            JOIN projects p
+                ON p.id = pa.project_id
+            WHERE p.client_id = ?
+            """;
+
+        try (
+                Connection connection =
+                        DBConnection.getConnection();
+
+                PreparedStatement statement =
+                        connection.prepareStatement(sql)
+        ) {
+
+            statement.setInt(
+                    1,
+                    clientId
+            );
+
+            ResultSet rs =
+                    statement.executeQuery();
+
+            while(rs.next()) {
+
+                ProjectAssignment assignment =
+                        new ProjectAssignment();
+
+                assignment.setId(
+                        rs.getInt("id")
+                );
+
+                assignment.setProjectId(
+                        rs.getInt("project_id")
+                );
+
+                assignment.setFreelancerId(
+                        rs.getInt("freelancer_id")
+                );
+
+                assignment.setProposalId(
+                        rs.getInt("proposal_id")
+                );
+
+                assignments.add(
+                        assignment
+                );
+            }
+
+        } catch(Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return assignments;
     }
 }

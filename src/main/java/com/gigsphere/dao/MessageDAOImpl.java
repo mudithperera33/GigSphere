@@ -140,4 +140,45 @@ public class MessageDAOImpl implements MessageDAO {
 
         return false;
     }
+    @Override
+    public List<Integer> getProjectIdsForUser(
+            int userId
+    ) {
+
+        List<Integer> projectIds =
+                new ArrayList<>();
+
+        String sql = """
+            SELECT DISTINCT project_id
+            FROM messages
+            WHERE sender_id = ?
+            """;
+
+        try (
+                Connection connection =
+                        DBConnection.getConnection();
+
+                PreparedStatement statement =
+                        connection.prepareStatement(sql)
+        ) {
+
+            statement.setInt(1, userId);
+
+            ResultSet rs =
+                    statement.executeQuery();
+
+            while (rs.next()) {
+
+                projectIds.add(
+                        rs.getInt("project_id")
+                );
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return projectIds;
+    }
 }

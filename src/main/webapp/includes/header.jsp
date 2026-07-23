@@ -145,8 +145,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <%= activePage.equals("messages") ? "active" : "" %>"
-                           href="<%= ctx %>/freelancer/messages.jsp">
+                        <a class="nav-link <%= "messages".equals(activePage) ? "active" : "" %>"
+                           href="<%= ctx %>/conversations.jsp">
+                            <i class="bi bi-chat-dots me-1"></i>
                             Messages
                         </a>
                     </li>
@@ -198,8 +199,9 @@
                     <li class="nav-item me-3 position-relative">
                         <a class="nav-link" href="<%= ctx %>/notifications.jsp">
                             <i class="bi bi-bell"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger gs-notification-badge">
-                                3
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                New
+                                <span class="visually-hidden">unread messages</span>
                             </span>
                         </a>
                     </li>

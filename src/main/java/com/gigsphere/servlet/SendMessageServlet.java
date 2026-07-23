@@ -45,7 +45,8 @@ public class SendMessageServlet
 
         response.sendRedirect(
                 request.getContextPath()
-                        + "/messages.jsp"
+                        + "/message-thread.jsp?projectId="
+                        + projectId
         );
     }
 }
