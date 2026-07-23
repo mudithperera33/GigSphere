@@ -1,314 +1,535 @@
 /* =========================================================
-   GigSphere — shared theme
-   Upwork + LinkedIn inspired: clean, professional, trustworthy
+   GigSphere — Complete Dark Cyberpunk & Obsidian Theme
    ========================================================= */
 
+/* --- 1. Root Variables --- */
 :root {
-  --gs-primary: #0d6efd;
-  --gs-primary-dark: #0b5ed7;
-  --gs-success: #198754;
-  --gs-bg: #f8f9fa;
-  --gs-card-bg: #ffffff;
-  --gs-text-muted: #6c757d;
-  --gs-navbar-bg: #0d1b2a;
-  --gs-radius: 15px;
-  --gs-radius-sm: 10px;
-  --gs-shadow: 0 4px 20px rgba(13, 27, 42, 0.06);
-  --gs-shadow-hover: 0 10px 30px rgba(13, 27, 42, 0.12);
+  /* Surfaces */
+  --gs-bg-dark: #07090e;
+  --gs-surface-card: rgba(15, 23, 42, 0.85);
+  --gs-surface-input: #020617;
+
+  /* Borders & Glows */
+  --gs-border-cyan: rgba(0, 242, 254, 0.25);
+  --gs-border-glow: #00f2fe;
+
+  /* Neons */
+  --gs-neon-cyan: #00f2fe;
+  --gs-neon-blue: #4facfe;
+  --gs-neon-pink: #ff007f;
+  --gs-neon-purple: #8b5cf6;
+
+  /* Text & Typography */
+  --gs-text-primary: #f8fafc;
+  --gs-text-muted: #cbd5e1;
+  --gs-text-dim: #94a3b8;
+
+  /* Status Tokens */
+  --gs-status-green: #059669;
+  --gs-status-teal: #0891b2;
+  --gs-status-red: #e11d48;
+  --gs-status-amber: #d97706;
+
+  /* Radii & Shadows */
+  --gs-radius: 12px;
+  --gs-radius-sm: 6px;
+  --gs-glow-sm: 0 0 12px rgba(0, 242, 254, 0.25);
+  --gs-glow-md: 0 0 20px rgba(0, 242, 254, 0.45);
+}
+
+/* --- 2. Sticky Footer Layout & Global Canvas --- */
+html {
+  height: 100%;
 }
 
 body {
-  background-color: var(--gs-bg);
-  font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
-  color: #212529;
+  background-color: var(--gs-bg-dark) !important;
+  color: var(--gs-text-primary) !important;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  background-image:
+          radial-gradient(circle at 10% 20%, rgba(0, 242, 254, 0.06) 0%, transparent 35%),
+          radial-gradient(circle at 90% 80%, rgba(255, 0, 127, 0.05) 0%, transparent 40%),
+          linear-gradient(rgba(7, 9, 14, 0.35), rgba(7, 9, 14, 0.55)),
+          url('../images/bg-grid.png') !important;
+  background-size: cover, cover, cover, cover !important;
+  background-position: center, center, center top !important;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat !important;
+  background-attachment: fixed, fixed, fixed, fixed !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 100vh !important;
+  margin: 0;
 }
 
-.gs-main {
-  min-height: calc(100vh - 350px);
+/* background-attachment: fixed causes performance/rendering issues on
+   mobile Safari & some Android browsers — fall back to scrolling there */
+@supports (-webkit-touch-callout: none) {
+  body {
+    background-attachment: scroll, scroll, scroll, scroll !important;
+  }
 }
 
-/* ---------- Navbar ---------- */
-.gs-navbar {
-  background-color: var(--gs-navbar-bg);
+/* Main Container expands to keep the footer at the bottom */
+main.gs-main, main {
+  flex: 1 0 auto !important;
 }
 
-.gs-navbar .navbar-brand {
+/* Footer sits locked at the bottom floor */
+footer, .gs-footer, .gs-footer-compact {
+  flex-shrink: 0 !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--gs-bg-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gs-neon-cyan);
+}
+
+/* --- 3. Global Typography Fixes --- */
+h1, h2, h3, h4, h5, h6, .card-title, .gs-brand-heading {
+  font-family: 'Orbitron', sans-serif !important;
   font-weight: 700;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.5px;
+  color: #ffffff !important;
 }
 
-.gs-navbar .nav-link {
-  font-weight: 500;
-  opacity: 0.85;
-}
-
-.gs-navbar .nav-link.active,
-.gs-navbar .nav-link:hover {
-  opacity: 1;
-  color: #fff;
-}
-
-.gs-btn-cta {
-  font-weight: 600;
-  border-radius: 50px;
-  padding: 0.4rem 1.1rem;
-}
-
-.gs-avatar {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--gs-primary);
-  color: #fff;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  font-size: 0.85rem;
-}
-
-/* ---------- Cards ---------- */
-.card {
-  border: none;
-  border-radius: var(--gs-radius);
-  box-shadow: var(--gs-shadow);
-  background-color: var(--gs-card-bg);
-}
-
-.gs-card-hover {
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.gs-card-hover:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--gs-shadow-hover);
-}
-
-/* ---------- Buttons ---------- */
-.btn-primary {
-  background-color: var(--gs-primary);
-  border-color: var(--gs-primary);
-  font-weight: 600;
-}
-
-.btn-primary:hover,
-.btn-primary:focus {
-  background-color: var(--gs-primary-dark);
-  border-color: var(--gs-primary-dark);
-}
-
-.btn-success {
-  font-weight: 600;
-}
-
-.btn, .form-control, .form-select {
-  border-radius: var(--gs-radius-sm);
-}
-
-/* ---------- Forms ---------- */
-.form-control:focus,
-.form-select:focus {
-  border-color: var(--gs-primary);
-  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
-}
-
-.gs-auth-card {
-  border-radius: var(--gs-radius);
-}
-
-/* ---------- Alerts ---------- */
-.gs-alert {
-  border-radius: var(--gs-radius-sm);
-  border: none;
-}
-
-/* ---------- Badges / status pills ---------- */
-.gs-badge-role {
-  border-radius: 50px;
-  padding: 0.35em 0.9em;
-  font-weight: 600;
-  font-size: 0.75rem;
-  letter-spacing: 0.3px;
-  text-transform: uppercase;
-}
-
-/* ---------- Section headings ---------- */
-.gs-section-title {
-  font-weight: 700;
-}
-
-.gs-page-heading {
-  font-weight: 700;
-  margin-bottom: 0.25rem;
-}
-
-.gs-page-subtext {
+p, span, div, td, th, li {
   color: var(--gs-text-muted);
 }
 
-/* ---------- Sidebar (dashboards) ---------- */
-.gs-sidebar {
-  background-color: var(--gs-card-bg);
-  border-radius: var(--gs-radius);
-  box-shadow: var(--gs-shadow);
-  padding: 1.25rem;
+.text-muted {
+  color: var(--gs-text-dim) !important;
 }
 
-.gs-sidebar .nav-link {
-  color: #495057;
+.form-label, label {
+  color: var(--gs-text-muted) !important;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+/* --- 4. Cards, Tiles & Containers Overrides --- */
+.card,
+.card-body,
+.card-header,
+.card-footer,
+.bg-white,
+.bg-light,
+.gs-card,
+.auth-card,
+.login-card,
+.register-card,
+[class*="card"] {
+  background-color: var(--gs-surface-card) !important;
+  border: 1px solid var(--gs-border-cyan) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  color: var(--gs-text-primary) !important;
+  border-radius: var(--gs-radius) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6) !important;
+  transition: all 0.3s ease;
+}
+
+.card:hover, .gs-card-hover:hover {
+  transform: translateY(-2px);
+  border-color: var(--gs-border-glow) !important;
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.25) !important;
+}
+
+/* --- 5. Inputs, Controls & Forms Overrides --- */
+.form-control,
+.form-select,
+input,
+textarea {
+  background-color: var(--gs-surface-input) !important;
+  border: 1px solid var(--gs-border-cyan) !important;
+  color: var(--gs-text-primary) !important;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
   border-radius: var(--gs-radius-sm);
-  padding: 0.6rem 0.9rem;
-  font-weight: 500;
 }
 
-.gs-sidebar .nav-link.active {
-  background-color: rgba(13, 110, 253, 0.1);
-  color: var(--gs-primary);
+.form-control:focus,
+.form-select:focus,
+input:focus,
+textarea:focus {
+  border-color: var(--gs-neon-cyan) !important;
+  box-shadow: 0 0 10px rgba(0, 242, 254, 0.4) !important;
+  color: #ffffff !important;
 }
 
-.gs-sidebar .nav-link:hover {
-  background-color: rgba(13, 110, 253, 0.06);
+/* --- 6. Alerts Overrides (e.g. "No projects found") --- */
+.alert,
+.alert-info,
+.alert-warning,
+.alert-success,
+.alert-danger,
+.alert-light {
+  background-color: rgba(15, 23, 42, 0.95) !important;
+  border: 1px solid var(--gs-neon-cyan) !important;
+  color: var(--gs-neon-cyan) !important;
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.15) !important;
+  border-radius: var(--gs-radius-sm);
 }
 
-/* ---------- Stat cards ---------- */
-.gs-stat-card {
-  border-radius: var(--gs-radius);
-  box-shadow: var(--gs-shadow);
-  padding: 1.25rem;
-  background: var(--gs-card-bg);
+.alert * {
+  color: var(--gs-neon-cyan) !important;
 }
 
-.gs-stat-value {
-  font-size: 1.8rem;
+/* --- 7. Buttons --- */
+.btn-primary,
+.btn-success,
+.btn-info,
+.gs-btn-cyber {
+  background: linear-gradient(135deg, var(--gs-neon-cyan), var(--gs-neon-blue)) !important;
+  border: none !important;
+  color: #000000 !important;
+  font-family: 'Orbitron', sans-serif !important;
   font-weight: 700;
+  letter-spacing: 0.5px;
+  box-shadow: var(--gs-glow-sm) !important;
+  transition: all 0.3s ease;
 }
 
-.gs-stat-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.3rem;
-  color: #fff;
+.btn-primary:hover,
+.btn-success:hover,
+.btn-info:hover,
+.gs-btn-cyber:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--gs-glow-md) !important;
+  color: #000000 !important;
 }
 
-/* ---------- Footer ---------- */
-.gs-footer {
-  background-color: var(--gs-navbar-bg);
-  color: rgba(255, 255, 255, 0.75);
+.btn-secondary, .btn-outline-secondary {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border: 1px solid var(--gs-border-cyan) !important;
+  color: var(--gs-text-muted) !important;
 }
 
-.gs-footer-brand {
-  color: #fff;
-  font-weight: 700;
+.btn-secondary:hover, .btn-outline-secondary:hover {
+  border-color: var(--gs-neon-cyan) !important;
+  color: var(--gs-neon-cyan) !important;
 }
 
-.gs-footer-link {
-  color: rgba(255, 255, 255, 0.65);
+/* --- 8. Badges --- */
+.badge {
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.5px;
+  padding: 0.45em 0.8em;
+  border-radius: var(--gs-radius-sm);
+}
+
+.bg-primary, .gs-status-progress {
+  background-color: rgba(8, 145, 178, 0.25) !important;
+  color: var(--gs-neon-cyan) !important;
+  border: 1px solid var(--gs-status-teal);
+}
+
+.bg-success, .gs-status-open, .gs-proposal-accepted {
+  background-color: rgba(5, 150, 105, 0.25) !important;
+  color: #34d399 !important;
+  border: 1px solid var(--gs-status-green);
+}
+
+.bg-danger, .gs-proposal-rejected {
+  background-color: rgba(225, 29, 72, 0.25) !important;
+  color: #f87171 !important;
+  border: 1px solid var(--gs-status-red);
+}
+
+.bg-warning, .gs-status-revision, .gs-proposal-pending {
+  background-color: rgba(217, 119, 6, 0.25) !important;
+  color: #fbbf24 !important;
+  border: 1px solid var(--gs-status-amber);
+}
+
+.bg-info {
+  background-color: rgba(139, 92, 246, 0.25) !important;
+  color: #c084fc !important;
+  border: 1px solid var(--gs-neon-purple);
+}
+
+/* --- 9. Compact Cyber Footer Styles --- */
+.gs-footer-compact {
+  background: #04060a;
+  border-top: 1px solid var(--gs-border-cyan);
+  position: relative;
+  width: 100%;
+}
+
+.gs-footer-compact a {
+  color: var(--gs-text-muted);
   text-decoration: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  transition: color 0.2s;
 }
 
-.gs-footer-link:hover {
-  color: #fff;
+.gs-footer-compact a:hover {
+  color: var(--gs-neon-cyan);
 }
 
-/* ---------- Hero (index page) ---------- */
-.gs-hero {
-  background: linear-gradient(135deg, var(--gs-navbar-bg) 0%, #10263c 100%);
-  color: #fff;
-  border-radius: var(--gs-radius);
+/* --- 10. Landing Hero Custom Styles --- */
+.hero-title {
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: 1.5px;
+  background: linear-gradient(135deg, #ffffff 40%, #00f2fe 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 30px rgba(0, 242, 254, 0.25);
 }
 
-/* ---------- Utility ---------- */
-.gs-shadow-sm {
-  box-shadow: var(--gs-shadow);
+.hero-subtitle {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--gs-text-dim) !important;
+  font-size: 1.15rem;
 }
 
-/* ==========================================
-   GigSphere Project Status Badges
-   ========================================== */
-
-.gs-status-open {
-  background-color: #198754;
-  color: white;
+.btn-cyber-hero {
+  background: linear-gradient(135deg, #00f2fe, #4facfe) !important;
+  color: #000000 !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 800 !important;
+  letter-spacing: 1px;
+  padding: 12px 36px !important;
+  border: none !important;
+  border-radius: 6px !important;
+  box-shadow: 0 0 20px rgba(0, 242, 254, 0.5) !important;
+  transition: all 0.3s ease !important;
+  text-decoration: none;
+  display: inline-block;
 }
 
-.gs-status-progress {
-  background-color: #0d6efd;
-  color: white;
+.btn-cyber-hero:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 32px rgba(0, 242, 254, 0.85) !important;
+  color: #000000 !important;
+}
+/* --- 11. Dashboard Stat & Action Tiles (CSS-only, no markup changes) --- */
+/* Hooks into the plain Bootstrap classes already used on every dashboard
+   tile (freelancer/client/admin): a .card with an <i class="bi ... fs-1
+   text-*"> icon, an <h3> stat number, and a <p class="text-muted"> label. */
+
+.card-body {
+  padding: 1.75rem 1.25rem;
 }
 
-.gs-status-completed {
-  background-color: #6c757d;
-  color: white;
-}
-
-.gs-status-revision {
-  background-color: #ffc107;
-  color: #212529;
-}
-
-/* ==========================================
-   Proposal Status Badges
-   ========================================== */
-
-.gs-proposal-pending {
-  background-color: #ffc107;
-  color: #212529;
-}
-
-.gs-proposal-accepted {
-  background-color: #198754;
-  color: white;
-}
-
-.gs-proposal-rejected {
-  background-color: #dc3545;
-  color: white;
-}
-
-/* ==========================================
-   Notification Badge
-   ========================================== */
-
-.gs-notification-badge {
-  min-width: 18px;
-  min-height: 18px;
-  border-radius: 50%;
-  font-size: 0.7rem;
+/* Turn the big flat icon into a glowing colored badge */
+.card-body > i.fs-1,
+.card-body i.fs-1 {
   display: inline-flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  margin-bottom: 0.5rem;
 }
 
-/* ==========================================
-   Portfolio Cards
-   ========================================== */
-
-.gs-portfolio-card img {
-  height: 200px;
-  object-fit: cover;
+.card-body i.fs-1.text-primary {
+  background: rgba(79, 172, 254, 0.14);
+  border-color: rgba(79, 172, 254, 0.4);
+  box-shadow: 0 0 18px rgba(79, 172, 254, 0.18);
+  color: var(--gs-neon-blue) !important;
 }
 
-/* ==========================================
-   Messaging
-   ========================================== */
-
-.gs-chat-box {
-  height: 450px;
-  overflow-y: auto;
+.card-body i.fs-1.text-success {
+  background: rgba(5, 150, 105, 0.18);
+  border-color: rgba(5, 150, 105, 0.45);
+  box-shadow: 0 0 18px rgba(5, 150, 105, 0.18);
+  color: #34d399 !important;
 }
 
-.gs-message-self {
-  background-color: #d1e7dd;
-  border-radius: 15px;
-  padding: 10px;
+.card-body i.fs-1.text-info {
+  background: rgba(0, 242, 254, 0.14);
+  border-color: rgba(0, 242, 254, 0.4);
+  box-shadow: 0 0 18px rgba(0, 242, 254, 0.18);
+  color: var(--gs-neon-cyan) !important;
 }
 
-.gs-message-other {
-  background-color: #f1f3f5;
-  border-radius: 15px;
-  padding: 10px;
+.card-body i.fs-1.text-warning {
+  background: rgba(217, 119, 6, 0.18);
+  border-color: rgba(217, 119, 6, 0.45);
+  box-shadow: 0 0 18px rgba(217, 119, 6, 0.18);
+  color: #fbbf24 !important;
+}
+
+/* Stat number — bigger, bolder, tighter to its label */
+.card-body h3 {
+  font-size: 2.1rem !important;
+  font-weight: 800 !important;
+  margin-bottom: 0.4rem !important;
+}
+
+/* Stat label (e.g. "Assigned Projects") — brighter + spaced out so it
+   doesn't wash into the dark surface like default .text-muted does */
+.card-body p.text-muted:not(.small) {
+  color: var(--gs-text-muted) !important;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+/* Action-card subtitle (e.g. "Find Work") — same brightness boost,
+   normal casing since it reads as a phrase, not a label */
+.card-body p.text-muted.small {
+  color: var(--gs-text-muted) !important;
+  font-size: 0.85rem;
+  letter-spacing: 0.2px;
+}
+
+.gs-action-card .card-title {
+  font-size: 1.05rem;
+  margin-bottom: 0.35rem !important;
+}
+
+/* =========================================================
+   NUCLEAR OVERRIDE FOR WHITE TILES & BOOTSTRAP UTILITIES
+   ========================================================= */
+
+/* Force all divs, cards, sections, and main containers away from white */
+div, section, article, main, header, footer,
+.card, .card-body, .card-header, .card-footer,
+.bg-white, .bg-light, .bg-body, .bg-surface,
+[class*="bg-white"], [class*="bg-light"] {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+}
+
+/* Fix input fields that are stuck with white backgrounds */
+input, textarea, select, .form-control, .form-select {
+  background-color: #020617 !important;
+  color: #f8fafc !important;
+  border: 1px solid rgba(0, 242, 254, 0.3) !important;
+}
+
+/* Fix dark text classes that make content invisible or off-color */
+.text-dark, .text-black, .text-body, [class*="text-dark"] {
+  color: #f8fafc !important;
+}
+
+/* Fix alert boxes (e.g. "No records found") */
+.alert, .alert-light, .alert-secondary {
+  background-color: rgba(15, 23, 42, 0.95) !important;
+  border: 1px solid #00f2fe !important;
+  color: #00f2fe !important;
+}
+
+/* Fix remaining Bootstrap components that default to white surfaces */
+.list-group-item,
+.dropdown-menu,
+.modal-content,
+.modal-header,
+.modal-footer,
+.offcanvas,
+.offcanvas-header,
+.toast,
+.toast-body,
+.accordion-item,
+.accordion-button,
+.accordion-body,
+.popover,
+.popover-body,
+.tooltip-inner {
+  background-color: var(--gs-surface-card) !important;
+  border-color: var(--gs-border-cyan) !important;
+  color: var(--gs-text-primary) !important;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: rgba(0, 242, 254, 0.12) !important;
+  color: var(--gs-neon-cyan) !important;
+  box-shadow: none !important;
+}
+
+.accordion-button::after {
+  filter: invert(1) brightness(2);
+}
+
+.dropdown-item {
+  color: var(--gs-text-muted) !important;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: rgba(0, 242, 254, 0.1) !important;
+  color: var(--gs-neon-cyan) !important;
+}
+
+/* Tables — Bootstrap uses CSS vars per-row, so reset those too */
+.table {
+  --bs-table-bg: transparent !important;
+  --bs-table-striped-bg: rgba(255, 255, 255, 0.03) !important;
+  --bs-table-hover-bg: rgba(0, 242, 254, 0.06) !important;
+  --bs-table-color: var(--gs-text-primary) !important;
+  --bs-table-border-color: var(--gs-border-cyan) !important;
+  color: var(--gs-text-primary) !important;
+}
+
+.table > :not(caption) > * > * {
+  background-color: transparent !important;
+  color: var(--gs-text-primary) !important;
+  border-bottom-color: var(--gs-border-cyan) !important;
+}
+
+/* Pagination & nav tabs/pills */
+.pagination .page-link {
+  background-color: var(--gs-surface-input) !important;
+  border-color: var(--gs-border-cyan) !important;
+  color: var(--gs-text-muted) !important;
+}
+
+.pagination .page-item.active .page-link {
+  background: linear-gradient(135deg, var(--gs-neon-cyan), var(--gs-neon-blue)) !important;
+  border-color: transparent !important;
+  color: #000000 !important;
+}
+
+.nav-tabs, .nav-pills {
+  border-color: var(--gs-border-cyan) !important;
+}
+
+.nav-tabs .nav-link,
+.nav-pills .nav-link {
+  color: var(--gs-text-muted) !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
+.nav-tabs .nav-link.active,
+.nav-pills .nav-link.active {
+  background: rgba(0, 242, 254, 0.12) !important;
+  color: var(--gs-neon-cyan) !important;
+  border-color: var(--gs-border-cyan) !important;
+}
+/* =========================================================
+   OVERRIDE HARDCODED INLINE WHITE BACKGROUNDS
+   ========================================================= */
+
+[style*="background: white"],
+[style*="background:white"],
+[style*="background:#fff"],
+[style*="background: #fff"],
+[style*="background-color: white"],
+[style*="background-color:white"],
+[style*="background-color: #fff"],
+[style*="background-color:#fff"],
+[style*="background-color: #ffffff"],
+[style*="background-color:#ffffff"] {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
 }
