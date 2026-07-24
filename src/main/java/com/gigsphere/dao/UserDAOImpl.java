@@ -88,6 +88,9 @@ public class UserDAOImpl implements UserDAO {
                 user.setFreelancerActive(
                         resultSet.getBoolean("freelancer_active"));
 
+                user.setAdmin(
+                        resultSet.getBoolean("is_admin"));
+
                 return user;
             }
 

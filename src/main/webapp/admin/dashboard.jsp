@@ -20,6 +20,17 @@ if (session.getAttribute("user") == null) {
     response.sendRedirect(request.getContextPath() + "/auth/login.jsp");
     return;
 }
+if (!"ADMIN".equals(
+        session.getAttribute("role")
+)) {
+
+    response.sendRedirect(
+            request.getContextPath()
+                    + "/index.jsp"
+    );
+
+    return;
+}
 
 UserDAO userDAO = new UserDAOImpl();
 ProjectDAO projectDAO = new ProjectDAOImpl();
@@ -93,7 +104,7 @@ int totalReviews = (reviewsList != null) ? reviewsList.size() : 0;
                         <h5 class="card-title">Users</h5>
                         <p class="card-text text-muted small">View and manage registered platform accounts.</p>
                     </div>
-                    <a href="<%= ctx %>/admin/users.jsp" class="btn btn-primary mt-3">
+                    <a href="<%= request.getContextPath() %>/admin/users.jsp" class="btn btn-primary mt-3">
                         <i class="bi bi-people me-1"></i> Manage Users
                     </a>
                 </div>
@@ -107,7 +118,7 @@ int totalReviews = (reviewsList != null) ? reviewsList.size() : 0;
                         <h5 class="card-title">Projects</h5>
                         <p class="card-text text-muted small">Inspect active, open, and completed jobs.</p>
                     </div>
-                    <a href="<%= ctx %>/admin/projects.jsp" class="btn btn-success mt-3">
+                    <a href="<%= request.getContextPath() %>/admin/projects.jsp" class="btn btn-success mt-3">
                         <i class="bi bi-folder me-1"></i> Manage Projects
                     </a>
                 </div>
@@ -121,7 +132,7 @@ int totalReviews = (reviewsList != null) ? reviewsList.size() : 0;
                         <h5 class="card-title">Reviews</h5>
                         <p class="card-text text-muted small">Monitor ratings and feedback submitted by users.</p>
                     </div>
-                    <a href="<%= ctx %>/admin/reviews.jsp" class="btn btn-warning mt-3">
+                    <a href="<%= request.getContextPath() %>/admin/reviews.jsp" class="btn btn-warning mt-3">
                         <i class="bi bi-star me-1"></i> Manage Reviews
                     </a>
                 </div>

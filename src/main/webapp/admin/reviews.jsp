@@ -14,6 +14,17 @@ if (session.getAttribute("user") == null) {
     response.sendRedirect(request.getContextPath() + "/auth/login.jsp");
     return;
 }
+if (!"ADMIN".equals(
+        session.getAttribute("role")
+)) {
+
+    response.sendRedirect(
+            request.getContextPath()
+                    + "/index.jsp"
+    );
+
+    return;
+}
 
 ReviewDAO reviewDAO = new ReviewDAOImpl();
 List<Review> reviews = reviewDAO.findAll();
@@ -25,7 +36,7 @@ List<Review> reviews = reviewDAO.findAll();
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3>Review Management</h3>
-        <a href="<%= ctx %>/admin/dashboard.jsp" class="btn btn-outline-secondary btn-sm">
+        <a href="<%= request.getContextPath() %>/admin/dashboard.jsp" class="btn btn-outline-secondary btn-sm">
             <i class="bi bi-arrow-left me-1"></i> Back to Dashboard
         </a>
     </div>

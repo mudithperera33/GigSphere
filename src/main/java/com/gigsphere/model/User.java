@@ -10,6 +10,7 @@ public class User {
 
     private boolean clientActive;
     private boolean freelancerActive;
+    private boolean admin;
 
     public User() {
     }
@@ -52,6 +53,14 @@ public class User {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 
     public boolean isClientActive() {

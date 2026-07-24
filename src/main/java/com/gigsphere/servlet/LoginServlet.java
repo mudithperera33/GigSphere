@@ -40,13 +40,35 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("userId", user.getId());
 
             // Set initial active role
-            if (user.isClientActive()) {
-                session.setAttribute("role", "CLIENT");
+            if (user.isAdmin()) {
+
+                session.setAttribute(
+                        "role",
+                        "ADMIN"
+                );
+
+            } else if (user.isClientActive()) {
+
+                session.setAttribute(
+                        "role",
+                        "CLIENT"
+                );
+
             } else if (user.isFreelancerActive()) {
-                session.setAttribute("role", "FREELANCER");
+
+                session.setAttribute(
+                        "role",
+                        "FREELANCER"
+                );
+
             } else {
-                session.setAttribute("role", "USER");
+
+                session.setAttribute(
+                        "role",
+                        "USER"
+                );
             }
+
 
             response.sendRedirect(
                     request.getContextPath() + "/dashboard.jsp"

@@ -9,9 +9,21 @@
 request.setAttribute("pageTitle", "Manage Projects");
 request.setAttribute("activePage", "admin");
 
+
 // Auth guard for logged in users
 if (session.getAttribute("user") == null) {
     response.sendRedirect(request.getContextPath() + "/auth/login.jsp");
+    return;
+}
+if (!"ADMIN".equals(
+        session.getAttribute("role")
+)) {
+
+    response.sendRedirect(
+            request.getContextPath()
+                    + "/index.jsp"
+    );
+
     return;
 }
 
@@ -25,7 +37,7 @@ List<Project> projects = projectDAO.findAll();
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3>Project Management</h3>
-        <a href="<%= ctx %>/admin/dashboard.jsp" class="btn btn-outline-secondary btn-sm">
+        <a href="<%= request.getContextPath() %>/admin/dashboard.jsp" class="btn btn-outline-secondary btn-sm">
             <i class="bi bi-arrow-left me-1"></i> Back to Dashboard
         </a>
     </div>
