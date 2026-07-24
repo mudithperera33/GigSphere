@@ -10,7 +10,7 @@ public class DBConnection {
 
     private static final String USER = "gigsphere_user";
 
-    private static final String PASSWORD = "YourStrongPassword123!"; // Replace with the password you assigned to gigsphere_user
+    private static final String PASSWORD = "95088202.Mnp1"; // Replace with the password you assigned to gigsphere_user
 
     static {
         try {
