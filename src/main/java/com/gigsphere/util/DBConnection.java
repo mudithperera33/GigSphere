@@ -6,11 +6,11 @@ import java.sql.DriverManager;
 public class DBConnection {
 
     private static final String URL =
-            "jdbc:mysql://localhost:3306/gigsphere";
+            "jdbc:mysql://localhost:3306/gigsphere?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
 
-    private static final String USER = "root";
+    private static final String USER = "gigsphere_user";
 
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "YourStrongPassword123!"; // Replace with the password you assigned to gigsphere_user
 
     static {
         try {
